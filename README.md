@@ -1,4 +1,4 @@
-# API DJango - Recoverid - Documentación
+# API DJango - Swap.in - Documentación
 
 > Description and use of the API - Swap.in - Final Project Platzi Master
 
