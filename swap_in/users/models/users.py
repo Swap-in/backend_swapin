@@ -38,6 +38,6 @@ class User(SwapinModel,AbstractUser):
 
     gender = models.CharField(max_length=8,choices=TYPE_GENDER)
 
-    auth_token = models.IntegerField(null=True)
+    token = models.IntegerField(null=True)
 
     # REQUIRED_FIELDS = ['username','first_name','last_name','phone_number']
