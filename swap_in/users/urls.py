@@ -12,7 +12,7 @@ from users.views import (
 
 urlpatterns = [
     path('users/', list_users),
-    path('users/create/', create_user),
+    path('users/signup/', create_user),
     path('users/login/', UserLoginAPIView.as_view(), name='login')
 ]
 

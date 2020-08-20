@@ -2,6 +2,7 @@
 
 # Django
 from django.contrib.auth import authenticate
+from django.core.validators import RegexValidator
 
 # Django REST Framework
 from rest_framework import serializers
@@ -14,7 +15,7 @@ from users.models import User
 class UserModelSerializer(serializers.ModelSerializer):
     """ User model serializer. """
     class Meta:
-        """Meta class """
+        """ Meta class """
         model = User
         fields = (
             'username',
@@ -24,13 +25,12 @@ class UserModelSerializer(serializers.ModelSerializer):
             'phone_number'
         )
 
-
 class UserSerializer(serializers.Serializer):
     """ Users Serializers. """
     username = serializers.CharField()
     password = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
+    # first_name = serializers.CharField()
+    # last_name = serializers.CharField()
     email = serializers.EmailField()
     phone_number = serializers.CharField()
     picture = serializers.CharField()
@@ -38,26 +38,35 @@ class UserSerializer(serializers.Serializer):
    # token = serializers.IntegerField() // lo mostramos o no?
 
 class CreateUserSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=60)
+    username = serializers.CharField(
+        validators=[
+            UniqueValidator(queryset=User.objects.all())
+        ]
+    )
     password = serializers.CharField()
-    first_name = serializers.CharField(max_length=40)
-    last_name = serializers.CharField(max_length=40)
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
     email = serializers.EmailField(
         validators=[
             UniqueValidator(queryset=User.objects.all())
         ]
     )
+    phone_regex = RegexValidator(
+        regex = r'\+?1?\d{9,15}$',
+        message = "Phone number must be entered in th format: +999999999999. Up to 15 digits allowed."
+    )
     phone_number = serializers.CharField(
         min_length=13,
         validators=[
-            UniqueValidator(queryset=User.objects.all())
+            UniqueValidator(queryset=User.objects.all()),
+            phone_regex
         ]
     )
     gender = serializers.CharField(max_length=6)
 
     def create(self, data):
         """ Create user """
-        return User.objects.create(**data)
+        return User.objects.create(**data, is_verified=False)
 
 class UserLoginSerializer(serializers.Serializer):
     """ User Login serializers """
@@ -66,10 +75,12 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=8)
 
     def validate(self, data):
-        """ Verifiy credentials. """
+        """ Verify credentials. """
         user = authenticate(username=data['username'], password=data['password'])
         if not user:
             raise serializers.ValidationError('Invalid credentials')
+        if not user.is_verified:
+            raise serializers.ValidationError('Account is not active yet, please verified your email to continue.')
         self.context['user'] = user
         return data
     

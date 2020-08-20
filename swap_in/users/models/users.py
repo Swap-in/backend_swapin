@@ -40,4 +40,6 @@ class User(SwapinModel,AbstractUser):
 
     token = models.IntegerField(null=True)
 
+    is_verified = models.BooleanField(default=False)
+
     # REQUIRED_FIELDS = ['username','first_name','last_name','phone_number']
