@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from swap_in.utils.models import SwapinModel
+from users.models.countries import country
 
 
 TYPE_GENDER = [
@@ -41,5 +42,7 @@ class User(SwapinModel,AbstractUser):
     token = models.IntegerField(null=True)
 
     is_verified = models.BooleanField(default=False)
+
+    country_id = models.ForeignKey(country,on_delete=models.CASCADE, null=False)
 
     # REQUIRED_FIELDS = ['username','first_name','last_name','phone_number']
