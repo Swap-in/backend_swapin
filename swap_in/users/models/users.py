@@ -39,7 +39,9 @@ class User(SwapinModel,AbstractUser):
 
     gender = models.CharField(max_length=8,choices=TYPE_GENDER)
 
-    auth_token = models.IntegerField(null=True)
+    token = models.IntegerField(null=True)
+
+    is_verified = models.BooleanField(default=False)
 
     country_id = models.ForeignKey(country,on_delete=models.CASCADE, null=False)
 
