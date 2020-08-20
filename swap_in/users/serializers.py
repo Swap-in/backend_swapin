@@ -17,24 +17,25 @@ class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         """ Meta class """
         model = User
-        fields = (
-            'username',
-            'first_name',
-            'last_name',
-            'email',
-            'phone_number'
-        )
+        fields = '__all__'
+        # fields = (
+        #     'username',
+        #     'first_name',
+        #     'last_name',
+        #     'email',
+        #     'phone_number'
+        # )
 
-class UserSerializer(serializers.Serializer):
+class UserSerializer(UserModelSerializer):
     """ Users Serializers. """
-    username = serializers.CharField()
-    password = serializers.CharField()
-    # first_name = serializers.CharField()
-    # last_name = serializers.CharField()
-    email = serializers.EmailField()
-    phone_number = serializers.CharField()
-    picture = serializers.CharField()
-    gender = serializers.CharField()
+    # username = serializers.CharField()
+    # password = serializers.CharField()
+    # # first_name = serializers.CharField()
+    # # last_name = serializers.CharField()
+    # email = serializers.EmailField()
+    # phone_number = serializers.CharField()
+    # picture = serializers.CharField()
+    # gender = serializers.CharField()
    # token = serializers.IntegerField() // lo mostramos o no?
 
 class CreateUserSerializer(serializers.Serializer):
@@ -43,7 +44,7 @@ class CreateUserSerializer(serializers.Serializer):
             UniqueValidator(queryset=User.objects.all())
         ]
     )
-    password = serializers.CharField()
+    password = serializers.CharField(min_length=8)
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     email = serializers.EmailField(
@@ -66,7 +67,10 @@ class CreateUserSerializer(serializers.Serializer):
 
     def create(self, data):
         """ Create user """
-        return User.objects.create(**data, is_verified=False)
+        user = User.objects.create(**data, is_verified=False)
+        user.set_password(data['password'])
+        user.save()
+        return user
 
 class UserLoginSerializer(serializers.Serializer):
     """ User Login serializers """
