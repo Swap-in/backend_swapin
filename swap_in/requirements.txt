@@ -4,3 +4,5 @@ pytz==2020.1
 sqlparse==0.3.1
 django-extensions==3.0.5
 djangorestframework==3.11.1
+django-anymail[mailgun]==7.2.1
+PyJWT==1.7.1

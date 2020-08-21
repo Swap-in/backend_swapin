@@ -5,14 +5,14 @@ from django.urls import path
 
 # views
 from users.views import (
+    UserSignUpAPIView,
     UserLoginAPIView,
     list_users,
-    create_user,
 ) 
 
 urlpatterns = [
     path('users/', list_users),
-    path('users/signup/', create_user),
+    path('users/signup/', UserSignUpAPIView.as_view(), name='signup'),
     path('users/login/', UserLoginAPIView.as_view(), name='login')
 ]
 

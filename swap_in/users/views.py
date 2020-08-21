@@ -32,16 +32,15 @@ class UserLoginAPIView(APIView):
         return Response(data, status=status.HTTP_201_CREATED)
 
 
-# class UserSignUpAPIView(APIView):
-#     """User Login API View"""
+class UserSignUpAPIView(APIView):
+    """User Login API View"""
     
-#     def post(self, request, *args, **kwargs):
-#         """Handle HTTP Post request"""
-#         serializer = UserSignUpSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.save()
-#         data = UserModelSerializer(user).data
-#         return Response(data, status=status.HTTP_201_CREATED)
+    def post(self, request, *args, **kwargs):
+        """Handle HTTP Post request"""
+        serializer = CreateUserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(UserSerializer(user).data)
 
 
 @api_view(['GET'])
@@ -51,10 +50,10 @@ def list_users(request):
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
-@api_view(['POST'])
-def create_user(request):
-    """ Create user. """
-    serializer = CreateUserSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    user = serializer.save()
-    return Response(UserSerializer(user).data)
+# @api_view(['POST'])
+# def create_user(request):
+#     """ Create user. """
+#     serializer = CreateUserSerializer(data=request.data)
+#     serializer.is_valid(raise_exception=True)
+#     user = serializer.save()
+#     return Response(UserSerializer(user).data)

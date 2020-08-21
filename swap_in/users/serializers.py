@@ -3,6 +3,10 @@
 # Django
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils import timezone
+from django.conf import settings
 
 # Django REST Framework
 from rest_framework import serializers
@@ -10,33 +14,36 @@ from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 
 # Models
-from users.models import User
+from users.models import User, Country
+
+# Utilites
+from datetime import timedelta
+import jwt
 
 class UserModelSerializer(serializers.ModelSerializer):
     """ User model serializer. """
     class Meta:
         """ Meta class """
         model = User
-        fields = '__all__'
-        # fields = (
-        #     'username',
-        #     'first_name',
-        #     'last_name',
-        #     'email',
-        #     'phone_number'
-        # )
+        # fields = '__all__' // This line just for example
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'phone_number'
+        )
 
-class UserSerializer(UserModelSerializer):
+class UserSerializer(serializers.Serializer):
     """ Users Serializers. """
-    # username = serializers.CharField()
-    # password = serializers.CharField()
-    # # first_name = serializers.CharField()
-    # # last_name = serializers.CharField()
-    # email = serializers.EmailField()
-    # phone_number = serializers.CharField()
-    # picture = serializers.CharField()
-    # gender = serializers.CharField()
-   # token = serializers.IntegerField() // lo mostramos o no?
+    username = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    email = serializers.EmailField()
+    phone_number = serializers.CharField()
+    picture = serializers.CharField()
+    gender = serializers.CharField()
+    country_id = serializers.PrimaryKeyRelatedField(read_only=True)
 
 class CreateUserSerializer(serializers.Serializer):
     username = serializers.CharField(
@@ -67,10 +74,39 @@ class CreateUserSerializer(serializers.Serializer):
 
     def create(self, data):
         """ Create user """
-        user = User.objects.create(**data, is_verified=False)
+        user_country_id = Country.objects.get(id=1)
+        user = User.objects.create(**data, is_verified=False, country_id=user_country_id)
         user.set_password(data['password'])
         user.save()
+        self.send_confirmation_email(user)
         return user
+
+    def send_confirmation_email(self, user):
+        """ Send account verification link to the created user """
+        verification_token = self.generate_token(user)
+        subject = f'Welcome @{user.username}, please verify your account to start swapin'
+        from_email = 'Swapin <noreply@swapin.com>'
+        content = render_to_string(
+            'verify_account.html',
+            {
+                'token': verification_token,
+                'user': user
+            }
+            )
+        msg = EmailMultiAlternatives(subject, content, from_email, [user.email])
+        msg.attach_alternative(content, "text/html")
+        msg.send()
+
+    def generate_token(self,user):
+        """ Generate verification token"""
+        exp_date = timezone.now() + timedelta(days=1)
+        payload = {
+            "user": user.username,
+            "exp": int(exp_date.timestamp()),
+            "type": "email_confirmation"
+        }
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
+        return token.decode()
 
 class UserLoginSerializer(serializers.Serializer):
     """ User Login serializers """
