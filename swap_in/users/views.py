@@ -26,9 +26,11 @@ class UserLoginAPIView(APIView):
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
+        username = UserModelSerializer(user)
         data = {
-            'user': UserModelSerializer(user).data,
-            'token': token
+            'message': f"Welcome {username.data['username']}",
+            'token': token,
+            'user': username.data
         }
         return Response(data, status=status.HTTP_200_OK)
 
