@@ -18,3 +18,4 @@ urlpatterns = [
     path('users/verify/', VerificationAccountAPIView.as_view(), name='verify')
 ]
 
+ 

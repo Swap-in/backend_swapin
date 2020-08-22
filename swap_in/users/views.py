@@ -1,4 +1,4 @@
-"""Users views"""
+""" Users views """
 
 # Django REST Framework
 from rest_framework.decorators import api_view
