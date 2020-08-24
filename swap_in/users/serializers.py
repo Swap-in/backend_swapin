@@ -14,7 +14,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token
 
 # Models
-from users.models import User, Country
+from swap_in.users.models import User, Country
 
 # Utilites
 from datetime import timedelta

@@ -4,7 +4,7 @@
 from django.urls import path
 
 # views
-from users.views import (
+from swap_in.users.views import (
     UserSignUpAPIView,
     UserLoginAPIView,
     list_users,

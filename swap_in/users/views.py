@@ -7,10 +7,10 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 # Models
-from users.models import User
+from swap_in.users.models import User
 
 # Serializer
-from users.serializers import (
+from swap_in.users.serializers import (
     UserSerializer,
     CreateUserSerializer,
     UserLoginSerializer,
