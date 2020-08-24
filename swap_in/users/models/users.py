@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from swap_in.utils.models import SwapinModel
+
 from users.models.countries import country
 
 
@@ -17,14 +18,6 @@ class User(SwapinModel,AbstractUser):
     
     Extend from Django's Abstract User
     """
-    # email = models.EmailField(
-    #     'email address',
-    #     unique=True,
-    #     error_messages ={
-    #         'unique':'A user with that email already exists.'
-    #     }
-    # )
-
     phone_regex = RegexValidator(
         regex = r'\+?1?\d{9,15}$',
         message = "Phone number must be entered in th format: +999999999999. Up to 15 digits allowed."
@@ -34,7 +27,6 @@ class User(SwapinModel,AbstractUser):
         max_length=17,blank=True
     )
 
-    
     picture = models.CharField(max_length=500,blank=True,null=True)
 
     gender = models.CharField(max_length=8,choices=TYPE_GENDER)
@@ -43,6 +35,4 @@ class User(SwapinModel,AbstractUser):
 
     is_verified = models.BooleanField(default=False)
 
-    country_id = models.ForeignKey(country,on_delete=models.CASCADE, null=False)
-
-    # REQUIRED_FIELDS = ['username','first_name','last_name','phone_number']
+    country_id = models.ForeignKey(Country,on_delete=models.CASCADE, null=False)
