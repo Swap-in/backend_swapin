@@ -43,6 +43,6 @@ class User(SwapinModel,AbstractUser):
 
     is_verified = models.BooleanField(default=False)
 
-    country_id = models.ForeignKey(country,on_delete=models.CASCADE, null=False)
+    #country_id = models.ForeignKey(country,on_delete=models.CASCADE, null=False)
 
     # REQUIRED_FIELDS = ['username','first_name','last_name','phone_number']

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -92,11 +93,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'hackathon',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '',
+#         'NAME': 'swapintest',
+#         'USER': 'admin',
+#         'PASSWORD': 'swapin_test123',
+#         'HOST': 'swapintest.cbe8bosjmboa.us-east-2.rds.amazonaws.com',
+#         'PORT': '3306',
 #     }
 # }
 
@@ -144,3 +145,13 @@ STATIC_URL = '/static/'
 #         'rest_framework.renderers.JSONRenderer',
 #     )
 # }
+
+
+AWS_ACCESS_KEY_ID = 'AKIA4MMIMX6LIHPBFQN3'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'swapin'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
