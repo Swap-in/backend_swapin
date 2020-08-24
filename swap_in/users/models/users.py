@@ -3,7 +3,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from swap_in.utils.models import SwapinModel
-from .countries import Country
+
+from users.models.countries import country
+
 
 TYPE_GENDER = [
         ("FEMALE","FEMALE"),
