@@ -1,1 +1,1 @@
-web: gunicorn swap_in.swap_in.wsgi --log-file -
+web: gunicorn swap_in.wsgi --log-file -
