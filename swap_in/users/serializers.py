@@ -3,7 +3,8 @@
 # Django
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, EmailMessage
+from django.template import Context
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.conf import settings
@@ -84,18 +85,19 @@ class CreateUserSerializer(serializers.Serializer):
     def send_confirmation_email(self, user):
         """ Send account verification link to the created user """
         verification_token = self.generate_token(user)
-        subject = f'Welcome @{user.username}, please verify your account to start swapin'
+        subject = 'Confirm your account to make some swaps'
         from_email = 'Swapin <noreply@swapin.com>'
-        content = render_to_string(
+
+        html_body = render_to_string(
             'verify_account.html',
             {
                 'token': verification_token,
                 'user': user
             }
-            )
-        msg = EmailMultiAlternatives(subject, content, from_email, [user.email])
-        msg.attach_alternative(content, "text/html")
-        msg.send()
+        )
+        mail = EmailMultiAlternatives(subject, html_body, from_email, [user.email])
+        mail.attach_alternative(html_body, "text/html")
+        mail.send()
 
     def generate_token(self,user):
         """ Generate verification token"""

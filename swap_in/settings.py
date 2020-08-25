@@ -27,7 +27,7 @@ SECRET_KEY = 'th*0+d@j9^67+s5)$h5*h(gios2&3mp(7z%9dw4wq@^6@rrr0r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['.herokuapp.com','localhost']
 
 
 # Application definition
@@ -49,17 +49,19 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'anymail',
+    'corsheaders',
 ]
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": "<your Mailgun key>",
-    "MAILGUN_SENDER_DOMAIN": 'mg.example.com',
+    "MAILGUN_API_KEY": "b11aedc3d5066bc7413fa44a15f656db-87c34c41-4683bd7a",
+    "MAILGUN_SENDER_DOMAIN": "sandboxdebf746434594c218e121a1104669f7d.mailgun.org",
 }
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'#'django.core.mail.backends.console.EmailBackend' #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
 DEFAULT_FROM_EMAIL = "you@example.com"  # if you don't already have this in settings
 SERVER_EMAIL = "your-server@example.com"  # ditto (default from-email for Django errors)
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,7 +69,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'swap_in.urls'
 
@@ -157,5 +162,8 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
 }
