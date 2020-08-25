@@ -86,8 +86,7 @@ class CreateUserSerializer(serializers.Serializer):
         """ Send account verification link to the created user """
         verification_token = self.generate_token(user)
         subject = 'Confirm your account to make some swaps'
-        from_email = 'Swapin <noreply@swapin.com>'
-
+        from_email = settings.EMAIL_HOST_USER
         html_body = render_to_string(
             'verify_account.html',
             {

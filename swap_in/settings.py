@@ -52,12 +52,6 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-ANYMAIL = {
-    "MAILGUN_API_KEY": "b11aedc3d5066bc7413fa44a15f656db-87c34c41-4683bd7a",
-    "MAILGUN_SENDER_DOMAIN": "sandboxdebf746434594c218e121a1104669f7d.mailgun.org",
-}
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'#'django.core.mail.backends.console.EmailBackend' #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
-DEFAULT_FROM_EMAIL = "you@example.com"  # if you don't already have this in settings
 SERVER_EMAIL = "your-server@example.com"  # ditto (default from-email for Django errors)
 
 MIDDLEWARE = [
@@ -167,3 +161,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #'anymail.backends.mailgun.EmailBackend'# #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'col.swapin@gmail.com'
+EMAIL_HOST_PASSWORD = 'col1.,_swapin'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
