@@ -26,7 +26,7 @@ class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         """ Meta class """
         model = User
-        # fields = '__all__' // This line just for example
+        # fields = '__all__' ## // This line just for example
         fields = (
             'username',
             'first_name',
