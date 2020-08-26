@@ -1,6 +1,6 @@
 from django.db import models
 
-from swap_in.clothes.models.clothes import Clothes
+from swap_in.clothes.models import Clothes
 from swap_in.users.models import User
 
 TYPE_LIKE = [

@@ -1,11 +1,11 @@
-#Django Models
+# Django Models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+
+# Models
 from swap_in.utils.models import SwapinModel
-
-from swap_in.users.models.countries import Country
-
+from swap_in.users.models import Country
 
 TYPE_GENDER = [
         ("FEMALE","FEMALE"),
