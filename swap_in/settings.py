@@ -40,15 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
-    'swap_in.users.apps.UsersConfig',
-    'swap_in.clothes.apps.ClothesConfig',
+    'swap_in.users',
+    'swap_in.clothes',
 
     # 3rd party apps
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
     'anymail',
-    'storages',
+    # 'storages',
     'corsheaders',
 ]
 
