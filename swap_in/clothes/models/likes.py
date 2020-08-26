@@ -1,6 +1,6 @@
 from django.db import models
 
-from .clothes import clothes
+from .clothes import Clothes
 from swap_in.users.models import User
 
 TYPE_LIKE = [
@@ -12,6 +12,6 @@ TYPE_LIKE = [
 class like(models.Model):
     type_like = models.CharField(max_length=15,choices=TYPE_LIKE)
     user_id = models.ForeignKey(User,on_delete=models.CASCADE, null=False)
-    clothe_id = models.ForeignKey(clothes,on_delete=models.CASCADE,null=False)
+    clothe_id = models.ForeignKey(Clothes,on_delete=models.CASCADE,null=False)
 
 
