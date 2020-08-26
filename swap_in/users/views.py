@@ -4,13 +4,18 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
+# Django
+from django.contrib.auth import logout
 
 # Models
-from users.models import User
+from swap_in.users.models import User
 
 # Serializer
-from users.serializers import (
+from swap_in.users.serializers import (
     UserSerializer,
     CreateUserSerializer,
     UserLoginSerializer,
@@ -50,6 +55,10 @@ class UserSignUpAPIView(APIView):
 class VerificationAccountAPIView(APIView):
     """ Verification Account View """
     
+    def get(self, request, *args, **kwargs):
+        """ Method provitional for accept token """
+        return Response("")
+
     def post(self, request, *args, **kwargs):
         """ Verified the account to start swapin """
         serializer = VerificationAccountSerializer(data=request.data)
@@ -57,11 +66,18 @@ class VerificationAccountAPIView(APIView):
         serializer.save()
         data = {'message':'Cool, make some swaps'}
         return Response(data, status=status.HTTP_200_OK)
+    
 
-
-@api_view(['GET'])
-def list_users(request):
+class UsersListAPIView(generics.ListCreateAPIView):
     """ List users. """
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
+    queryset = User.objects.all()
+    serializer_class = UserModelSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_class = [TokenAuthentication]
+
+class Logout(APIView):
+    """ Logout user and delete token. """
+    def get(self,request, format = None):
+        request.user.auth_token.delete()
+        logout(request)
+        return Response(status = status.HTTP_200_OK)

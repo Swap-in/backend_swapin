@@ -1,11 +1,11 @@
-#Django Models
+# Django Models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+
+# Models
 from swap_in.utils.models import SwapinModel
-
-from users.models.countries import Country
-
+from .countries import Country
 
 TYPE_GENDER = [
         ("FEMALE","FEMALE"),
@@ -34,5 +34,5 @@ class User(SwapinModel,AbstractUser):
     token = models.IntegerField(null=True)
 
     is_verified = models.BooleanField(default=False)
-
+    
     country_id = models.ForeignKey(Country,on_delete=models.CASCADE, null=False)

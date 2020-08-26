@@ -27,8 +27,7 @@ SECRET_KEY = 'th*0+d@j9^67+s5)$h5*h(gios2&3mp(7z%9dw4wq@^6@rrr0r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['.herokuapp.com','localhost']
 
 # Application definition
 
@@ -41,25 +40,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
-    'users.apps.UsersConfig',
-    'clothes.apps.ClothesConfig',
+    'swap_in.users.apps.UsersConfig',
+    'swap_in.clothes.apps.ClothesConfig',
 
     # 3rd party apps
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
     'anymail',
+    'storages',
+    'corsheaders',
 ]
 
-ANYMAIL = {
-    "MAILGUN_API_KEY": "<your Mailgun key>",
-    "MAILGUN_SENDER_DOMAIN": 'mg.example.com',
-}
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
-DEFAULT_FROM_EMAIL = "you@example.com"  # if you don't already have this in settings
 SERVER_EMAIL = "your-server@example.com"  # ditto (default from-email for Django errors)
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,7 +63,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'swap_in.urls'
 
@@ -151,11 +150,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_RENDERER_CLASSES': (
-#         'rest_framework.renderers.JSONRenderer',
-#     )
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    # Use this form authentication and permissions global.
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # )
+}
+
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #'anymail.backends.mailgun.EmailBackend'# #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'col.swapin@gmail.com'
+EMAIL_HOST_PASSWORD = 'col1.,_swapin'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AWS_ACCESS_KEY_ID = 'AKIA4MMIMX6LIHPBFQN3'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'swapin'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
