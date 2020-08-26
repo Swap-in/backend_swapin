@@ -1,9 +1,9 @@
 from django.db import models
 
 # Create your models here.
-from users.models import User
+from swap_in.users.models import User
 from swap_in.utils.models import SwapinModel
-from clothes.models.categories import category
+from swap_in.clothes.models.categories import category
 
 TYPE_GENDER = [
         ("FEMALE","FEMALE"),
