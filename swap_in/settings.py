@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
+
     'swap_in.users',
     'swap_in.clothes',
 
