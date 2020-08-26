@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com','localhost']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'anymail',
+    'storages',
     'corsheaders',
 ]
 
@@ -150,6 +150,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
@@ -173,3 +174,13 @@ EMAIL_HOST_USER = 'col.swapin@gmail.com'
 EMAIL_HOST_PASSWORD = 'col1.,_swapin'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AWS_ACCESS_KEY_ID = 'AKIA4MMIMX6LIHPBFQN3'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'swapin'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+

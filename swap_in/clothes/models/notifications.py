@@ -3,7 +3,6 @@ from django.db import models
 from swap_in.clothes.models import like
 from swap_in.utils.models import SwapinModel
 
-
 class notification(SwapinModel):
     date = models.DateTimeField(null=False)
     read = models.BooleanField(default=False)
