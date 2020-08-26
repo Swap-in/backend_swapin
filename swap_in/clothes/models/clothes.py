@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 from swap_in.users.models import User
 from swap_in.utils.models import SwapinModel
-from .categories import category
+from swap_in.clothes.models import category
 
 TYPE_GENDER = [
         ("FEMALE","FEMALE"),
