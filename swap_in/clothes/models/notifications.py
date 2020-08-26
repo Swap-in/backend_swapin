@@ -1,6 +1,6 @@
 from django.db import models
 
-from swap_in.clothes.models import like
+from .likes import like
 from swap_in.utils.models import SwapinModel
 
 class notification(SwapinModel):

@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 
 # Models
 from swap_in.utils.models import SwapinModel
-from swap_in.users.models import Country
+from .countries import Country
 
 TYPE_GENDER = [
         ("FEMALE","FEMALE"),
