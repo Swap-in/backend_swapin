@@ -26,13 +26,13 @@ class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         """ Meta class """
         model = User
-        # fields = '__all__' ## // This line just for example
         fields = (
             'username',
             'first_name',
             'last_name',
             'email',
-            'phone_number'
+            'phone_number',
+            'picture'
         )
 
 class UserSerializer(serializers.Serializer):
@@ -71,6 +71,7 @@ class CreateUserSerializer(serializers.Serializer):
             phone_regex
         ]
     )
+    picture = serializers.CharField()
     gender = serializers.CharField(max_length=6)
 
     def create(self, data):

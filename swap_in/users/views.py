@@ -1,5 +1,8 @@
 """ Users views """
 
+# Django
+from django.shortcuts import redirect
+
 # Django REST Framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -56,12 +59,10 @@ class VerificationAccountAPIView(APIView):
         """ Method provitional for accept token """
         verify_token = request.GET['token']
         token_dict = {'token': verify_token}
-        print(verify_token)
         serializer = VerificationAccountSerializer(data=token_dict)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        data = {'message':'Cool, make some swaps'}
-        return Response(data, status=status.HTTP_200_OK)
+        return redirect('localhost:8081/login')
     
 
 class UsersListAPIView(generics.ListCreateAPIView):
