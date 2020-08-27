@@ -54,11 +54,10 @@ class VerificationAccountAPIView(APIView):
     
     def get(self, request, *args, **kwargs):
         """ Method provitional for accept token """
-        return Response("")
-
-    def post(self, request, *args, **kwargs):
-        """ Verified the account to start swapin """
-        serializer = VerificationAccountSerializer(data=request.data)
+        verify_token = request.GET['token']
+        token_dict = {'token': verify_token}
+        print(verify_token)
+        serializer = VerificationAccountSerializer(data=token_dict)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = {'message':'Cool, make some swaps'}

@@ -7,10 +7,8 @@
 </head>
 <body>
     <p>Welcome {{ user.username }}</p>
-    <p>
     Before you start using <b>Swapin</b> we need you to do one last thing.
-    <br>Please click this button to verify your account
-    <button type="submit"> GO </button>
-    </p>
+    <p>Please click this link to verify your account</p>
+    <p>https://localhost:8000/users/verify/?token={{ token }}</p>
 </body>
 </html>
