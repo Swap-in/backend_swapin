@@ -1,9 +1,5 @@
-# Users URLS
-
-# Django
 from django.urls import path
 
-# views
 from swap_in.users.views import (
     UserSignUpAPIView,
     UserLoginAPIView,

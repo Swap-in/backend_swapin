@@ -1,14 +1,14 @@
+# Django
 from django.shortcuts import render
-import datetime
 
-# rest_framework
+# Django REST Framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 from rest_framework.renderers import JSONRenderer
 
-#models
+# Models
 from swap_in.clothes.models import (
     like,
     Clothes,
@@ -17,6 +17,9 @@ from swap_in.clothes.models import (
     Prueba
 )
 from swap_in.users.models import User
+
+# Utilities
+import datetime
 
 def count_likes(clothes_id):
     """Count number of like for type"""

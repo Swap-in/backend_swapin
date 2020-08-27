@@ -9,9 +9,9 @@ from swap_in.clothes.views import (
 )
 
 urlpatterns = [
-    path('clothes/like',create_like),
+    path('clothes/like/',create_like),
     path('clothes/notification_user/<int:id>/',list_notifications_by_user),
     path('clothes/notification_clothe/<int:id>/',list_notifications_by_clothe),
-    path('clothes/notification_read',notification_read),
-    path('clothes/image',save_image)
+    path('clothes/notification_read/',notification_read),
+    path('clothes/image/',save_image)
 ]

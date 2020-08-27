@@ -11,7 +11,7 @@ from rest_framework.authentication import TokenAuthentication
 # Models
 from swap_in.users.models import User
 
-# Serializer
+# Serializers
 from swap_in.users.serializers import (
     UserSerializer,
     CreateUserSerializer,

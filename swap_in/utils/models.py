@@ -1,6 +1,5 @@
 from django.db import models
 
-#Lists Status
 TYPE_STATUS = [
         ("ACTIVE","ACTIVE"),
         ("INACTIVE","INACTIVE")
