@@ -8,9 +8,6 @@ from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
-# Django
-from django.contrib.auth import logout
-
 # Models
 from swap_in.users.models import User
 
@@ -74,10 +71,3 @@ class UsersListAPIView(generics.ListCreateAPIView):
     serializer_class = UserModelSerializer
     permission_classes = [IsAuthenticated]
     authentication_class = [TokenAuthentication]
-
-class Logout(APIView):
-    """ Logout user and delete token. """
-    def get(self,request, format = None):
-        request.user.auth_token.delete()
-        logout(request)
-        return Response(status = status.HTTP_200_OK)
