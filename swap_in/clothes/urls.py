@@ -1,6 +1,11 @@
 from django.urls import path
 
-from clothes.views import create_like,list_notifications_by_user,list_notifications_by_clothe,notification_read,save_image
+from swap_in.clothes.views import (
+    create_like,
+    list_notifications_by_user,
+    list_notifications_by_clothe,
+    notification_read,save_image
+)
 
 urlpatterns = [
     path('clothes/like',create_like),

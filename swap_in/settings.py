@@ -41,14 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
-    'users.apps.UsersConfig',
-    'clothes.apps.ClothesConfig',
+    'swap_in.users',
+    'swap_in.clothes',
 
     # 3rd party apps
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
-    'storages',
     'anymail',
 
 ]

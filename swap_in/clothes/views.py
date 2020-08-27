@@ -9,12 +9,12 @@ from rest_framework import status
 from rest_framework.renderers import JSONRenderer
 
 #models
-from clothes.models.likes import like
-from clothes.models.clothes import Clothes
-from clothes.models.notifications import notification
-from users.models import User
-from clothes.models.matches import Match
-from clothes.models.prueba import Prueba
+from swap_in.clothes.models import like
+from swap_in.clothes.models import Clothes
+from swap_in.clothes.models import notification
+from swap_in.users.models import User
+from swap_in.clothes.models import Match
+from swap_in.clothes.models import Prueba
 
 
 def count_likes(clothes_id):

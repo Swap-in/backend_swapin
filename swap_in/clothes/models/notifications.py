@@ -1,6 +1,6 @@
 from django.db import models
 
-from clothes.models.likes import like
+from .likes import like
 from swap_in.utils.models import SwapinModel
 
 

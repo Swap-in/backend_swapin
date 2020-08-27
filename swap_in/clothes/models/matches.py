@@ -1,7 +1,7 @@
 from django.db import models
 
 
-from users.models.users import User
+from swap_in.users.models import User
 
 
 class Match(models.Model):
