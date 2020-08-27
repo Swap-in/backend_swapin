@@ -4,7 +4,8 @@ from swap_in.clothes.views import (
     create_like,
     list_notifications_by_user,
     list_notifications_by_clothe,
-    notification_read,save_image
+    notification_read,
+    save_image
 )
 
 urlpatterns = [
