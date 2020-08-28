@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status, generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 # from rest_framework.authentication import TokenAuthentication
 
 # Models
@@ -33,6 +33,7 @@ import random
 
 class UserLoginAPIView(APIView):
     """User Login API View"""
+    permission_classes = (AllowAny,)
     
     def post(self, request, *args, **kwargs):
         """Handle HTTP Post request"""
@@ -50,6 +51,7 @@ class UserLoginAPIView(APIView):
 
 class UserSignUpAPIView(APIView):
     """ User Login API View """
+    permission_classes = (AllowAny,)
     
     def post(self, request, *args, **kwargs):
         """Handle HTTP Post request"""
@@ -62,10 +64,13 @@ class UserSignUpAPIView(APIView):
 
 class VerificationAccountAPIView(APIView):
     """ Verification Account View """
-    
+    permission_classes = (AllowAny,)
+    authentication_classes = []
+
     def get(self, request, *args, **kwargs):
         """ Verify account """
         verify_token = request.GET['token']
+        print(verify_token)
         token_dict = {'token': verify_token}
         serializer = VerificationAccountSerializer(data=token_dict)
         serializer.is_valid(raise_exception=True)
@@ -82,5 +87,5 @@ class Home(APIView):
         home = Clothes.objects.all()
         # likes = like.objects.all()
         # serializer_like = LikesHomeSerializers(likes)
-        serializer_home = HomeSerializer(home)
+        serializer_home = HomeSerializer(home, many=True).data
         return Response (serializer_home, status=status.HTTP_200_OK)

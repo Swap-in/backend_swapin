@@ -177,7 +177,7 @@ class CategoryHomeSerializer(serializers.ModelSerializer):
 
 class HomeSerializer(serializers.ModelSerializer):
     """ Home serializer for feed aplication """
-    catergory = CategoryHomeSerializer(many=False, read_only=True)
+    category = CategoryHomeSerializer(many=False, read_only=True)
     username = UserHomeSerializer(many=False, read_only=True)
     
     class Meta:
@@ -185,9 +185,10 @@ class HomeSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'title',
-            'decription',
+            'description',
             'category',
             'size',
+            'brand',
             'gender',
             'username',
             'picture_1',

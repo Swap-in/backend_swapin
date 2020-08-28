@@ -4,8 +4,8 @@ from django.shortcuts import render
 # Django REST Framework
 from rest_framework import status, viewsets
 # from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 
@@ -41,6 +41,7 @@ def count_likes(clothes_id):
     return data
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated))
 def create_like(request):
 
     new_like = like()
@@ -82,12 +83,14 @@ def create_notification(like):
     
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def num_notification(user_id):
     num_not = notification.objects.filter(like_id__clothe_id__user_id = user_id).count()
 
     return Response(num_not,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def list_notifications_by_user(self,id):
     clothes_filter = Clothes.objects.filter(user_id__id=id)
     # user_notif = User.objects.filter(id=id)
@@ -112,6 +115,7 @@ def list_notifications_by_user(self,id):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated))
 def notification_read(request):
     read_notification = notification.objects.get(id=request.data['notification_id'])
     read_notification.read=True
@@ -162,6 +166,7 @@ def search_match(like_user):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def list_notifications_by_clothe(self,id):
 
     clothes_filter = Clothes.objects.get(id=id)
@@ -186,6 +191,7 @@ def list_notifications_by_clothe(self,id):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated))
 def save_image(requests):
     with open(requests.data['ruta'],mode="r") as photo:
         prueba1 = Prueba()
@@ -198,6 +204,7 @@ def save_image(requests):
 
 class UsersClothesAPIView(viewsets.ModelViewSet):
     """ List users. """
+    permission_classes = [IsAuthenticated]
+    
     queryset = Clothes.objects.all()
     serializer_class = UserClothesSerializer
-    permission_classes = [IsAuthenticated]
