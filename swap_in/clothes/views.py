@@ -2,10 +2,11 @@
 from django.shortcuts import render
 
 # Django REST Framework
+from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
-
 from rest_framework.renderers import JSONRenderer
 
 # Models
@@ -17,6 +18,9 @@ from swap_in.clothes.models import (
     Prueba
 )
 from swap_in.users.models import User
+
+# Serializers
+from .serializers import UserClothesSerializer
 
 # Utilities
 import datetime
@@ -192,6 +196,10 @@ def save_image(requests):
 
     return Response("OK",status=status.HTTP_200_OK)
     
-        
 
-
+class UsersClothesAPIView(viewsets.ModelViewSet):
+    """ List users. """
+    queryset = Clothes.objects.all()
+    serializer_class = UserClothesSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_class = [TokenAuthentication]
