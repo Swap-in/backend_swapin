@@ -18,7 +18,7 @@ class Clothes(SwapinModel):
     size= models.CharField(max_length=20,null=False)
     gender = models.CharField(max_length=8,choices=TYPE_GENDER)
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
-    picture_1  = models.CharField(max_length=500,blank=False,null=False)
+    picture_1 = models.CharField(max_length=500,blank=False,null=False)
     picture_2 = models.CharField(max_length=500,blank=True,null=True)
     picture_3 = models.CharField(max_length=500,blank=True,null=True)
     picture_4 = models.CharField(max_length=500,blank=True,null=True)

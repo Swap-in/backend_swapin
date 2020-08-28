@@ -13,6 +13,11 @@ from rest_framework.authentication import TokenAuthentication
 
 # Models
 from swap_in.users.models import User
+from swap_in.clothes.models import (
+    like,
+    Clothes,
+    category
+)
 
 # Serializers
 from swap_in.users.serializers import (
@@ -20,8 +25,13 @@ from swap_in.users.serializers import (
     CreateUserSerializer,
     UserLoginSerializer,
     UserModelSerializer,
-    VerificationAccountSerializer
+    VerificationAccountSerializer,
+    LikesHomeSerializers,
+    HomeSerializer
 )
+
+# Utilities
+import random
 
 class UserLoginAPIView(APIView):
     """User Login API View"""
@@ -56,7 +66,7 @@ class VerificationAccountAPIView(APIView):
     """ Verification Account View """
     
     def get(self, request, *args, **kwargs):
-        """ Method provitional for accept token """
+        """ Verify account """
         verify_token = request.GET['token']
         token_dict = {'token': verify_token}
         serializer = VerificationAccountSerializer(data=token_dict)
@@ -65,9 +75,15 @@ class VerificationAccountAPIView(APIView):
         return redirect('localhost:8081/login')
     
 
-class UsersListAPIView(generics.ListCreateAPIView):
+class Home(APIView):
     """ List users. """
-    queryset = User.objects.all()
-    serializer_class = UserModelSerializer
     permission_classes = [IsAuthenticated]
     authentication_class = [TokenAuthentication]
+
+    def get(self, request, *args, **kwargs):
+        """ Get all clothes for home app """
+        home = Clothes.objects.all()
+        # likes = like.objects.all()
+        # serializer_like = LikesHomeSerializers(likes)
+        serializer_home = HomeSerializer(home)
+        return Response (serializer_home, status=status.HTTP_200_OK)
