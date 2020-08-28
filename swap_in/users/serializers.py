@@ -17,7 +17,6 @@ from rest_framework.authtoken.models import Token
 # Models
 from swap_in.users.models import User, Country
 from swap_in.clothes.models import (
-    like,
     Clothes,
     category
 )
@@ -196,16 +195,4 @@ class HomeSerializer(serializers.ModelSerializer):
             'picture_3',
             'picture_4',
             'picture_5'
-        )
-
-class LikesHomeSerializers(serializers.ModelSerializer):
-    """ Likes home serializers for clothes """
-    clothes_likes = HomeSerializer(many=False, read_only=True)
-
-    class Meta:
-        model = like
-        fields = (
-            'id',
-            'type_like',
-            'clothes_like'
         )

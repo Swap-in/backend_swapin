@@ -9,12 +9,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
+# from rest_framework.authentication import TokenAuthentication
 
 # Models
 from swap_in.users.models import User
 from swap_in.clothes.models import (
-    like,
     Clothes,
     category
 )
@@ -26,7 +25,6 @@ from swap_in.users.serializers import (
     UserLoginSerializer,
     UserModelSerializer,
     VerificationAccountSerializer,
-    LikesHomeSerializers,
     HomeSerializer
 )
 
@@ -78,7 +76,6 @@ class VerificationAccountAPIView(APIView):
 class Home(APIView):
     """ List users. """
     permission_classes = [IsAuthenticated]
-    authentication_class = [TokenAuthentication]
 
     def get(self, request, *args, **kwargs):
         """ Get all clothes for home app """

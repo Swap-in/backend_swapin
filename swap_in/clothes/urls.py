@@ -15,7 +15,7 @@ from swap_in.clothes.views import (
 )
 
 router = DefaultRouter()
-router.register(r'user/clothes/', UsersClothesAPIView)
+router.register(r'user/clothes', UsersClothesAPIView, 'clothes')
 urlpatterns = router.urls
 
 urlpatterns += [
