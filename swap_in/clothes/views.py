@@ -188,18 +188,6 @@ def list_notifications_by_clothe(self,id):
         data.append(item_data)
 
     return Response(data,status=status.HTTP_200_OK)
-
-
-@api_view(['POST'])
-@permission_classes((IsAuthenticated))
-def save_image(requests):
-    with open(requests.data['ruta'],mode="r") as photo:
-        prueba1 = Prueba()
-        prueba1.description="Esto es una prueba1"
-        prueba1.picture = photo
-        prueba1.save()
-
-    return Response("OK",status=status.HTTP_200_OK)
     
 
 class UsersClothesAPIView(viewsets.ModelViewSet):

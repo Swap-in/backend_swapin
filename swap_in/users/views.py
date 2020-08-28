@@ -79,13 +79,11 @@ class VerificationAccountAPIView(APIView):
     
 
 class Home(APIView):
-    """ List users. """
+    """ Home application. """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         """ Get all clothes for home app """
-        home = Clothes.objects.all()
-        # likes = like.objects.all()
-        # serializer_like = LikesHomeSerializers(likes)
+        home = User.objects.all()
         serializer_home = HomeSerializer(home, many=True).data
         return Response (serializer_home, status=status.HTTP_200_OK)
