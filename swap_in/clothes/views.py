@@ -14,8 +14,7 @@ from swap_in.clothes.models import (
     like,
     Clothes,
     notification,
-    Match,
-    Prueba
+    Match
 )
 from swap_in.users.models import User
 
