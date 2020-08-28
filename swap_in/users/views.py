@@ -75,7 +75,7 @@ class VerificationAccountAPIView(APIView):
         serializer = VerificationAccountSerializer(data=token_dict)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return redirect('localhost:8081/login')
+        return redirect('https://swapin.vercel.app/login')
     
 
 class Home(APIView):
