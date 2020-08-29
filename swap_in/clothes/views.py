@@ -2,10 +2,11 @@
 from django.shortcuts import render
 
 # Django REST Framework
-from rest_framework.decorators import api_view
+from rest_framework import status, viewsets
+# from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from rest_framework import status
-
 from rest_framework.renderers import JSONRenderer
 
 # Models
@@ -18,8 +19,8 @@ from swap_in.clothes.models import (
 )
 from swap_in.users.models import User
 
-from swap_in.clothes.serializers import (
-    CategorySerializer)
+# Serializers
+from .serializers import UserClothesSerializer, CategorySerializer
 
 # Utilities
 import datetime
@@ -77,12 +78,14 @@ def create_notification(like):
     
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def num_notification(user_id):
     num_not = notification.objects.filter(like_id__clothe_id__user_id = user_id).count()
 
     return Response(num_not,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def list_notifications_by_user(self,id):
     clothes_filter = Clothes.objects.filter(user_id__id=id)
     notification_filter = notification.objects.filter(like_id__clothe_id__in = [clothes.id for clothes in clothes_filter],read = False).order_by('-date')
@@ -166,6 +169,7 @@ def search_match(like_user):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def list_notifications_by_clothe(self,id):
 
     clothes_filter = Clothes.objects.get(id=id)
@@ -185,6 +189,7 @@ def list_notifications_by_clothe(self,id):
 
     return Response(data,status=status.HTTP_200_OK)
 
+  
 @api_view(['GET'])
 def get_categories(requests):
         list_categories = category.objects.all()
@@ -225,7 +230,9 @@ def search_clothes_by_category(self,id_category,id_user):
     return Response(data,status=status.HTTP_200_OK)
 
 
-
-        
-
-
+class UsersClothesAPIView(viewsets.ModelViewSet):
+    """ List users. """
+    permission_classes = [IsAuthenticated]
+    
+    queryset = Clothes.objects.all()
+    serializer_class = UserClothesSerializer

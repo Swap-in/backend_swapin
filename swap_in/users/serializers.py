@@ -16,6 +16,10 @@ from rest_framework.authtoken.models import Token
 
 # Models
 from swap_in.users.models import User, Country
+from swap_in.clothes.models import (
+    Clothes,
+    category
+)
 
 # Utilites
 from datetime import timedelta
@@ -27,6 +31,7 @@ class UserModelSerializer(serializers.ModelSerializer):
         """ Meta class """
         model = User
         fields = (
+            'id',
             'username',
             'first_name',
             'last_name',
@@ -138,10 +143,8 @@ class VerificationAccountSerializer(serializers.Serializer):
 
     def validate_token(self,data):
         """ Verify if token is valid or not """
-        print(type(data))
         try:
             payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
-            print(payload)
         except jwt.ExpiredSignatureError:
             raise serializers.ValidationError('Verification link has expired')
         except jwt.PyJWTError:
@@ -158,3 +161,36 @@ class VerificationAccountSerializer(serializers.Serializer):
         user.is_verified = True
         user.save()
             
+class ClothesHomeSerializer(serializers.ModelSerializer):
+    """ Clothes home serializer """
+    class Meta:
+        model = Clothes
+        fields = (
+            'id',
+            'status',
+            'title',
+            'description',
+            'size',
+            'gender',
+            'brand',
+            'picture_1',
+            'picture_2',
+            'picture_3',
+            'picture_4',
+            'picture_5',
+            'category_id',
+            'user_id'
+        )
+
+class HomeSerializer(serializers.ModelSerializer):
+    """ User home serializer for feed aplication """
+    clothes = ClothesHomeSerializer(read_only=True, many=True)
+    
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'picture',
+            'clothes'
+        )
