@@ -41,7 +41,6 @@ def count_likes(clothes_id):
     return data
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated))
 def create_like(request):
 
     new_like = like()
@@ -64,11 +63,6 @@ def create_like(request):
         }
         
     data.append(item)
-
-
-
-    # num_likes_clothes = count_likes(request['clothe_id'])
-    # return Response(num_likes_clothes,status=status.HTTP_200_OK)
     return Response(data,status=status.HTTP_200_OK)
 
 
@@ -93,9 +87,7 @@ def num_notification(user_id):
 @permission_classes((AllowAny))
 def list_notifications_by_user(self,id):
     clothes_filter = Clothes.objects.filter(user_id__id=id)
-    # user_notif = User.objects.filter(id=id)
     notification_filter = notification.objects.filter(like_id__clothe_id__in = [clothes.id for clothes in clothes_filter],read = False).order_by('-date')
-    # print(user_notif)
     data = []
 
     for item in notification_filter:
@@ -115,7 +107,6 @@ def list_notifications_by_user(self,id):
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated))
 def notification_read(request):
     read_notification = notification.objects.get(id=request.data['notification_id'])
     read_notification.read=True
@@ -170,12 +161,9 @@ def search_match(like_user):
 def list_notifications_by_clothe(self,id):
 
     clothes_filter = Clothes.objects.get(id=id)
-    # like_filter = like.objects.filter(clothe_id = clothes_filter).order_by()
     like_filter = notification.objects.filter(like_id__clothe_id = clothes_filter).order_by('-date')
     data =[]
     for item in like_filter:
-        # print(item.like_id.clothe_id.id)
-        # notif = notification.objects.filter(like_id=item)
         item_data = {
             "user_id":item.like_id.user_id.id,
             "user_name":item.like_id.user_id.first_name + ' ' + item.like_id.user_id.last_name,

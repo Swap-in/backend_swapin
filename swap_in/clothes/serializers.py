@@ -13,3 +13,13 @@ class UserClothesSerializer(serializers.ModelSerializer):
         """ Meta class """
         model = Clothes
         fields = '__all__'
+
+class ClothesByUsersSerializer(serializers.Serializer):
+    """ List clothes by user """
+
+    clothes_by_user = UserClothesSerializer(many=True)
+    
+    class Meta:
+        """ Meta class """
+        fields = ('clothes_by_user')
+    
