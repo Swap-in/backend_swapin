@@ -10,18 +10,16 @@ from swap_in.clothes.views import (
     list_notifications_by_user,
     list_notifications_by_clothe,
     notification_read,
-    save_image,
     UsersClothesAPIView
 )
 
 router = DefaultRouter()
-router.register(r'user/clothes/', UsersClothesAPIView)
+router.register(r'user/clothes', UsersClothesAPIView, 'clothes')
 urlpatterns = router.urls
 
 urlpatterns += [
     path('clothes/like/',create_like),
     path('clothes/notification_user/<int:id>/',list_notifications_by_user),
     path('clothes/notification_clothe/<int:id>/',list_notifications_by_clothe),
-    path('clothes/notification_read/',notification_read),
-    path('clothes/image/',save_image)
+    path('clothes/notification_read/',notification_read)
 ]

@@ -17,7 +17,6 @@ from rest_framework.authtoken.models import Token
 # Models
 from swap_in.users.models import User, Country
 from swap_in.clothes.models import (
-    like,
     Clothes,
     category
 )
@@ -144,10 +143,8 @@ class VerificationAccountSerializer(serializers.Serializer):
 
     def validate_token(self,data):
         """ Verify if token is valid or not """
-        print(type(data))
         try:
             payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
-            print(payload)
         except jwt.ExpiredSignatureError:
             raise serializers.ValidationError('Verification link has expired')
         except jwt.PyJWTError:
@@ -164,48 +161,36 @@ class VerificationAccountSerializer(serializers.Serializer):
         user.is_verified = True
         user.save()
             
-class UserHomeSerializer(serializers.ModelSerializer):
-    """ User home serializer """
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'picture')
-
-class CategoryHomeSerializer(serializers.ModelSerializer):
-    """ Category home serializer """
-    class Meta:
-        model = category
-        fields = 'description'
-
-class HomeSerializer(serializers.ModelSerializer):
-    """ Home serializer for feed aplication """
-    catergory = CategoryHomeSerializer(many=False, read_only=True)
-    username = UserHomeSerializer(many=False, read_only=True)
-    
+class ClothesHomeSerializer(serializers.ModelSerializer):
+    """ Clothes home serializer """
     class Meta:
         model = Clothes
         fields = (
             'id',
+            'status',
             'title',
-            'decription',
-            'category',
+            'description',
             'size',
             'gender',
-            'username',
+            'brand',
             'picture_1',
             'picture_2',
             'picture_3',
             'picture_4',
-            'picture_5'
+            'picture_5',
+            'category_id',
+            'user_id'
         )
 
-class LikesHomeSerializers(serializers.ModelSerializer):
-    """ Likes home serializers for clothes """
-    clothes_likes = HomeSerializer(many=False, read_only=True)
-
+class HomeSerializer(serializers.ModelSerializer):
+    """ User home serializer for feed aplication """
+    clothes = ClothesHomeSerializer(read_only=True, many=True)
+    
     class Meta:
-        model = like
+        model = User
         fields = (
             'id',
-            'type_like',
-            'clothes_like'
+            'username',
+            'picture',
+            'clothes'
         )

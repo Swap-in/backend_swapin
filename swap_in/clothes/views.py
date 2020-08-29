@@ -3,9 +3,9 @@ from django.shortcuts import render
 
 # Django REST Framework
 from rest_framework import status, viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 
@@ -63,11 +63,6 @@ def create_like(request):
         }
         
     data.append(item)
-
-
-
-    # num_likes_clothes = count_likes(request['clothe_id'])
-    # return Response(num_likes_clothes,status=status.HTTP_200_OK)
     return Response(data,status=status.HTTP_200_OK)
 
 
@@ -82,17 +77,17 @@ def create_notification(like):
     
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def num_notification(user_id):
     num_not = notification.objects.filter(like_id__clothe_id__user_id = user_id).count()
 
     return Response(num_not,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def list_notifications_by_user(self,id):
     clothes_filter = Clothes.objects.filter(user_id__id=id)
-    # user_notif = User.objects.filter(id=id)
     notification_filter = notification.objects.filter(like_id__clothe_id__in = [clothes.id for clothes in clothes_filter],read = False).order_by('-date')
-    # print(user_notif)
     data = []
 
     for item in notification_filter:
@@ -162,15 +157,13 @@ def search_match(like_user):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny))
 def list_notifications_by_clothe(self,id):
 
     clothes_filter = Clothes.objects.get(id=id)
-    # like_filter = like.objects.filter(clothe_id = clothes_filter).order_by()
     like_filter = notification.objects.filter(like_id__clothe_id = clothes_filter).order_by('-date')
     data =[]
     for item in like_filter:
-        # print(item.like_id.clothe_id.id)
-        # notif = notification.objects.filter(like_id=item)
         item_data = {
             "user_id":item.like_id.user_id.id,
             "user_name":item.like_id.user_id.first_name + ' ' + item.like_id.user_id.last_name,
@@ -183,22 +176,11 @@ def list_notifications_by_clothe(self,id):
         data.append(item_data)
 
     return Response(data,status=status.HTTP_200_OK)
-
-
-@api_view(['POST'])
-def save_image(requests):
-    with open(requests.data['ruta'],mode="r") as photo:
-        prueba1 = Prueba()
-        prueba1.description="Esto es una prueba1"
-        prueba1.picture = photo
-        prueba1.save()
-
-    return Response("OK",status=status.HTTP_200_OK)
     
 
 class UsersClothesAPIView(viewsets.ModelViewSet):
     """ List users. """
+    permission_classes = [IsAuthenticated]
+    
     queryset = Clothes.objects.all()
     serializer_class = UserClothesSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_class = [TokenAuthentication]
