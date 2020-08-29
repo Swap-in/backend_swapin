@@ -94,23 +94,23 @@ WSGI_APPLICATION = 'swap_in.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'swapintest',
-        'USER': 'admin',
-        'PASSWORD': 'swapin_test123',
-        'HOST': 'swapintest.cbe8bosjmboa.us-east-2.rds.amazonaws.com',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'swapintest',
+#         'USER': 'admin',
+#         'PASSWORD': 'swapin_test123',
+#         'HOST': 'swapintest.cbe8bosjmboa.us-east-2.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -174,12 +174,3 @@ EMAIL_HOST_USER = 'col.swapin@gmail.com'
 EMAIL_HOST_PASSWORD = 'col1.,_swapin'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-AWS_ACCESS_KEY_ID = 'AKIA4MMIMX6LIHPBFQN3'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'swapin'
-
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

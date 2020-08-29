@@ -14,9 +14,12 @@ from swap_in.clothes.models import (
     Clothes,
     notification,
     Match,
-    Prueba
+    category
 )
 from swap_in.users.models import User
+
+from swap_in.clothes.serializers import (
+    CategorySerializer)
 
 # Utilities
 import datetime
@@ -49,7 +52,7 @@ def create_like(request):
     if request.data['type_like'] == 'LIKE' or request.data['type_like'] == 'SUPERLIKE':
         create_notification(new_like)
         if request.data['type_like'] == 'SUPERLIKE':
-            item = search_match(new_like)
+            item = search_match(new_like.user_id.id,new_like.clothe_id.user_id.id,new_like.type_like,new_like.clothe_id.id)
         else:
             item = {
                 "match":False
@@ -60,11 +63,6 @@ def create_like(request):
         }
         
     data.append(item)
-
-
-
-    # num_likes_clothes = count_likes(request['clothe_id'])
-    # return Response(num_likes_clothes,status=status.HTTP_200_OK)
     return Response(data,status=status.HTTP_200_OK)
 
 
@@ -87,11 +85,8 @@ def num_notification(user_id):
 @api_view(['GET'])
 def list_notifications_by_user(self,id):
     clothes_filter = Clothes.objects.filter(user_id__id=id)
-    # user_notif = User.objects.filter(id=id)
     notification_filter = notification.objects.filter(like_id__clothe_id__in = [clothes.id for clothes in clothes_filter],read = False).order_by('-date')
-    # print(user_notif)
     data = []
-
     for item in notification_filter:
         item_data = {
             "user_id":item.like_id.user_id.id,
@@ -101,12 +96,24 @@ def list_notifications_by_user(self,id):
             "clothe_id": item.like_id.clothe_id.id,
             "notification_id": item.id
         }
+        
+        match = match_notification(item.like_id.user_id.id,id),
+
+        item_data['is_match'] = match[0]
+        if match[0]==True:
+            item_data['phone_number'] =item.like_id.user_id.phone_number
+
 
         data.append(item_data)
 
     return Response(data,status=status.HTTP_200_OK)
 
-
+def match_notification(user_id_like,user_id_clothe):
+    count_like = Match.objects.filter(user_like_id = user_id_like, user_clothe_id = user_id_clothe).count()
+    if count_like > 0:
+        return True
+    else:
+        return False
 
 @api_view(['POST'])
 def notification_read(request):
@@ -162,12 +169,9 @@ def search_match(like_user):
 def list_notifications_by_clothe(self,id):
 
     clothes_filter = Clothes.objects.get(id=id)
-    # like_filter = like.objects.filter(clothe_id = clothes_filter).order_by()
     like_filter = notification.objects.filter(like_id__clothe_id = clothes_filter).order_by('-date')
     data =[]
     for item in like_filter:
-        # print(item.like_id.clothe_id.id)
-        # notif = notification.objects.filter(like_id=item)
         item_data = {
             "user_id":item.like_id.user_id.id,
             "user_name":item.like_id.user_id.first_name + ' ' + item.like_id.user_id.last_name,
@@ -181,17 +185,47 @@ def list_notifications_by_clothe(self,id):
 
     return Response(data,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_categories(requests):
+        list_categories = category.objects.all()
+        categories = CategorySerializer(list_categories,many=True)
+        return Response(categories.data,status=status.HTTP_200_OK)
 
-@api_view(['POST'])
-def save_image(requests):
-    with open(requests.data['ruta'],mode="r") as photo:
-        prueba1 = Prueba()
-        prueba1.description="Esto es una prueba1"
-        prueba1.picture = photo
-        prueba1.save()
 
-    return Response("OK",status=status.HTTP_200_OK)
-    
+@api_view(['GET'])
+def search_clothes_by_category(self,id_category,id_user):
+    user = User.objects.get(id = id_user)
+    category_search = category.objects.get(id = id_category)
+    result = Clothes.objects.filter(category_id = category_search ).exclude(user_id = user)
+    data = []
+    for clothes_result in result:
+        item_clothe= {
+            'id': clothes_result.id,
+            'title': clothes_result.title,
+            'description' : clothes_result.description,
+            'category_id' : clothes_result.category_id.id,
+            'category_description' : clothes_result.category_id.description,
+            'size' : clothes_result.size,
+            'gender' : clothes_result.gender,            
+            'picture_1' : clothes_result.picture_1,
+            'picture_2' : clothes_result.picture_2,
+            'picture_3' : clothes_result.picture_3,
+            'picture_4' : clothes_result.picture_4,
+            'picture_5' : clothes_result.picture_5,
+            'user_id' : clothes_result.user_id.id,
+            'username' : clothes_result.user_id.username,
+            'first_name' : clothes_result.user_id.first_name,
+            'last_name' : clothes_result.user_id.last_name,
+            'email' : clothes_result.user_id.email,
+            'phone_number' : clothes_result.user_id.phone_number,
+            'picture' : clothes_result.user_id.picture
+        }
+
+        data.append(item_clothe)
+    return Response(data,status=status.HTTP_200_OK)
+
+
+
         
 
 

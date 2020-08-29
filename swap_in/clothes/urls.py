@@ -5,7 +5,8 @@ from swap_in.clothes.views import (
     list_notifications_by_user,
     list_notifications_by_clothe,
     notification_read,
-    save_image
+    get_categories,
+    search_clothes_by_category,
 )
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path('clothes/notification_user/<int:id>/',list_notifications_by_user),
     path('clothes/notification_clothe/<int:id>/',list_notifications_by_clothe),
     path('clothes/notification_read/',notification_read),
-    path('clothes/image/',save_image)
+    path('clothes/get_categories/',get_categories),
+    path('clothes/search_clothes/<int:id_category>/<int:id_user>',search_clothes_by_category),
 ]
