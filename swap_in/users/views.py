@@ -95,6 +95,7 @@ def Home(self):
     data=[]
     for clothe in clothes:
         home = {
+            'id': clothe.id,
             'title': clothe.title,
             'description': clothe.description,
             'pictures': {
