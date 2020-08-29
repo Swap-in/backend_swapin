@@ -25,7 +25,7 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'th*0+d@j9^67+s5)$h5*h(gios2&3mp(7z%9dw4wq@^6@rrr0r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com','localhost']
 
@@ -48,11 +48,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'anymail',
-    # 'storages',
     'corsheaders',
 ]
 
-SERVER_EMAIL = "your-server@example.com"  # ditto (default from-email for Django errors)
+SERVER_EMAIL = "your-server@example.com"  
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -94,23 +93,17 @@ WSGI_APPLICATION = 'swap_in.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'swapintest2',
+        'USER': 'admin',
+        'PASSWORD': 'swapin_test123',
+        'HOST': 'swapintest2.cbe8bosjmboa.us-east-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'swapintest',
-#         'USER': 'admin',
-#         'PASSWORD': 'swapin_test123',
-#         'HOST': 'swapintest.cbe8bosjmboa.us-east-2.rds.amazonaws.com',
-#         'PORT': '3306',
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -168,7 +161,7 @@ REST_FRAMEWORK = {
 }
 
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #'anymail.backends.mailgun.EmailBackend'# #"anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'col.swapin@gmail.com'
 EMAIL_HOST_PASSWORD = 'col1.,_swapin'

@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
-# from rest_framework.authentication import TokenAuthentication
 
 # Models
 from swap_in.users.models import User
@@ -77,17 +76,6 @@ class VerificationAccountAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return redirect('https://swapin.vercel.app/login')
-    
-
-# class Home(APIView):
-#     """ Home application. """
-#     permission_classes = [IsAuthenticated]
-
-#     def get(self, request):
-#         """ Get all clothes for home app """
-#         home = User.objects.all()
-#         serializer_home = HomeSerializer(home, many=True).data
-#         return Response (serializer_home, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def Home(self):
@@ -114,37 +102,6 @@ def Home(self):
         }
         data.append(home)
     return Response(data)
-
-
-# [
-#      {  
-#           prenda_1  : {
-#               'user_id': user.id,
-#               'username': user.username,
-#               'profile_picture': user.picture,
-#               'pictures': [
-#                       'picture1',
-#                       'picture2'
-#                ]
-#               'title': 'titulo de la prenda'
-#               'description': 'descripcion de la prenda'
-#             }
-#      },
-#      {  
-#           prenda_2  : {
-#               'user_id': user.id,
-#               'username': user.username,
-#               'profile_picture': user.picture,
-#               'pictures': [
-#                       'picture1',
-#                       'picture2'
-#                ]
-#               'title': 'titulo de la prenda'
-#               'description': 'descripcion de la prenda'
-#             }
-#      }
-# ]
-
     
 
 class ListClothesByUserAPIView(APIView):
