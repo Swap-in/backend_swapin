@@ -52,7 +52,7 @@ def create_like(request):
     if request.data['type_like'] == 'LIKE' or request.data['type_like'] == 'SUPERLIKE':
         create_notification(new_like)
         if request.data['type_like'] == 'SUPERLIKE':
-            item = search_match(new_like.user_id.id,new_like.clothe_id.user_id.id,new_like.type_like,new_like.clothe_id.id)
+            item = search_match(new_like)
         else:
             item = {
                 "match":False
