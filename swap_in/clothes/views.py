@@ -78,14 +78,12 @@ def create_notification(like):
     
 
 @api_view(['GET'])
-@permission_classes((AllowAny))
 def num_notification(user_id):
     num_not = notification.objects.filter(like_id__clothe_id__user_id = user_id).count()
 
     return Response(num_not,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-@permission_classes((AllowAny))
 def list_notifications_by_user(self,id):
     clothes_filter = Clothes.objects.filter(user_id__id=id)
     notification_filter = notification.objects.filter(like_id__clothe_id__in = [clothes.id for clothes in clothes_filter],read = False).order_by('-date')
@@ -169,7 +167,6 @@ def search_match(like_user):
 
 
 @api_view(['GET'])
-@permission_classes((AllowAny))
 def list_notifications_by_clothe(self,id):
 
     clothes_filter = Clothes.objects.get(id=id)
