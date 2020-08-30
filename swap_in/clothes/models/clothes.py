@@ -1,3 +1,4 @@
+#Django
 from django.db import models
 
 # Models
@@ -12,6 +13,7 @@ TYPE_GENDER = [
         ]
 
 class Clothes(SwapinModel):
+    """Clothes Model."""
     title = models.CharField(max_length=150,null=False)
     description = models.CharField(max_length=500,null=False)
     category_id = models.ForeignKey(category,related_name='category',on_delete=models.CASCADE, null=False)
