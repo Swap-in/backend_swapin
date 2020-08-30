@@ -6,22 +6,33 @@ from rest_framework import serializers
 # Models
 from swap_in.clothes.models import Clothes, category
 
-class ClothesSerializer(serializers.ModelSerializer):
+class UserClothesSerializer(serializers.ModelSerializer):
     """ User clothes serializer """
+
     class Meta:
+        """ Meta class """
         model = Clothes
         fields = '__all__'
 
 class ClothesByUsersSerializer(serializers.Serializer):
     """ List clothes by user """
-    clothes_by_user = ClothesSerializer(many=True)
+
+    clothes_by_user = UserClothesSerializer(many=True)
     
     class Meta:
+        """ Meta class """
         fields = ('clothes_by_user')
 
-class CategorySerializer(serializers.Serializer):
-    """ List clothes by category """
-    clothes = ClothesSerializer(many=True)
-
+class CategoryModelserializer(serializers.ModelSerializer):
+    """ Category model serializer. """
     class Meta:
-        fields = ('clothes')
+        """ Meta class """
+        model = category
+        fields = (
+            'id',
+            'description',            
+        )
+
+class CategorySerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    description = serializers.CharField()
