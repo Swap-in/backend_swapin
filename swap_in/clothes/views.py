@@ -20,7 +20,7 @@ from swap_in.clothes.models import (
 from swap_in.users.models import User
 
 # Serializers
-from .serializers import UserClothesSerializer, CategorySerializer
+from .serializers import ClothesSerializer, CategorySerializer
 
 # Utilities
 import datetime
@@ -188,10 +188,16 @@ def list_notifications_by_clothe(self,id):
 
   
 @api_view(['GET'])
-def get_categories(requests):
-        list_categories = category.objects.all()
-        categories = CategorySerializer(list_categories,many=True)
-        return Response(categories.data,status=status.HTTP_200_OK)
+def get_categories(request, id):
+    """ List clothes by an specific category """
+    obj = get_objects(id)
+    serializer = CategorySerializer(obj).data
+    return Response(serializer)
+
+def get_objects(id):
+    clothes_category = Clothes.objects.filter(category_id=id)
+    obj = {'clothes': clothes_category}
+    return obj
 
 
 @api_view(['GET'])
@@ -232,4 +238,4 @@ class UsersClothesAPIView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     
     queryset = Clothes.objects.all()
-    serializer_class = UserClothesSerializer
+    serializer_class = ClothesSerializer
