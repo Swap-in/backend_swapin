@@ -19,15 +19,6 @@ class ClothesByUsersSerializer(serializers.Serializer):
     class Meta:
         fields = ('clothes_by_user')
 
-# class CategoryModelserializer(serializers.ModelSerializer):
-#     """ Category model serializer. """
-#     class Meta:
-#         model = category
-#         fields = (
-#             'id',
-#             'description',            
-#         )
-
 class CategorySerializer(serializers.Serializer):
     """ List clothes by category """
     clothes = ClothesSerializer(many=True)
