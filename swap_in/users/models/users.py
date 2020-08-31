@@ -8,12 +8,12 @@ from swap_in.utils.models import SwapinModel
 from .countries import Country
 
 TYPE_GENDER = [
-        ("FEMALE","FEMALE"),
-        ("MALE","MALE"),
-        ("OTHER","OTHER")
+        ("FEMALE", "FEMALE"),
+        ("MALE", "MALE"),
+        ("OTHER", "OTHER")
         ]
 
-class User(SwapinModel,AbstractUser):
+class User(SwapinModel, AbstractUser):
     """Swap.in User
     
     Extend from Django's Abstract User
@@ -23,16 +23,29 @@ class User(SwapinModel,AbstractUser):
         message = "Phone number must be entered in th format: +999999999999. Up to 15 digits allowed."
     )
 
-    phone_number = models.CharField(validators=[phone_regex],
-        max_length=17,blank=True
+    phone_number = models.CharField(
+        validators=[phone_regex],
+        max_length=17,
+        blank=True
     )
 
-    picture = models.CharField(max_length=500,blank=True,null=True)
+    picture = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True
+    )
 
-    gender = models.CharField(max_length=8,choices=TYPE_GENDER)
+    gender = models.CharField(
+        max_length=8,
+        choices=TYPE_GENDER
+    )
 
     token = models.IntegerField(null=True)
 
     is_verified = models.BooleanField(default=False)
     
-    country_id = models.ForeignKey(Country,on_delete=models.CASCADE, null=False)
+    country_id = models.ForeignKey(
+        Country,
+        on_delete=models.CASCADE,
+        null=False
+    )

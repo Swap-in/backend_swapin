@@ -4,27 +4,21 @@
 from django.shortcuts import redirect
 
 # Django REST Framework
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status, generics
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # Models
-from swap_in.users.models import User
-from swap_in.clothes.models import (
-    Clothes,
-    category
-)
+from swap_in.clothes.models import Clothes
 
 # Serializers
 from swap_in.users.serializers import (
-    UserSerializer,
     CreateUserSerializer,
     UserLoginSerializer,
     UserModelSerializer,
-    VerificationAccountSerializer,
-    HomeSerializer
+    VerificationAccountSerializer
 )
 from swap_in.clothes.serializers import ClothesByUsersSerializer
 

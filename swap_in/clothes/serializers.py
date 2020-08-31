@@ -1,12 +1,10 @@
 """ Clothes Serializers """
 
-# Django REST Framework 
+# Django REST Framework
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 
 # Models
-from swap_in.clothes.models import Clothes, category, like
-from swap_in.users.models import User
+from swap_in.clothes.models import Clothes, category
 
 class UserClothesSerializer(serializers.ModelSerializer):
     """ User clothes serializer """
@@ -32,13 +30,10 @@ class CategoryModelserializer(serializers.ModelSerializer):
         model = category
         fields = (
             'id',
-            'description',            
+            'description',
         )
 
 class CategorySerializer(serializers.Serializer):
     """Category serializer"""
     id = serializers.IntegerField()
     description = serializers.CharField()
-
-
-

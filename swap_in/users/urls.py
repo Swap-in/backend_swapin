@@ -15,5 +15,3 @@ urlpatterns = [
     path('users/verify/', VerificationAccountAPIView.as_view(), name='verify'),
     path('users/list_clothes/<int:id>/', ListClothesByUserAPIView.as_view(), name='users_clothes')
 ]
-
- 
