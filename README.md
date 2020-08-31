@@ -52,7 +52,7 @@ CD automatic with Heroku: https://swapin.herokuapp.com/
 | clothes/search_clothes/<int:id_category>/<int:id_user>/  | that is responsible for returning the result of the clothes by category  |
 
 
-## Licencia 📄
+## License 📄
 
 Este proyecto está bajo la Licencia (MIT) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
 
