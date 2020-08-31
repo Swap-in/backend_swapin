@@ -101,6 +101,7 @@ def Home(self):
             'profile_picture': clothe.user_id.picture
         }
         data.append(home)
+    random.shuffle(data)
     return Response(data)
     
 

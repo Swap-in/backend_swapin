@@ -22,7 +22,7 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'th*0+d@j9^67+s5)$h5*h(gios2&3mp(7z%9dw4wq@^6@rrr0r'
+SECRET_KEY = os.environ.get('SECRET_KEY_HASH')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -97,11 +97,11 @@ WSGI_APPLICATION = 'swap_in.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'swapintest2',
-        'USER': 'admin',
-        'PASSWORD': 'swapin_test123',
-        'HOST': 'swapintest2.cbe8bosjmboa.us-east-2.rds.amazonaws.com',
-        'PORT': '3306',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -163,7 +163,7 @@ REST_FRAMEWORK = {
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'col.swapin@gmail.com'
-EMAIL_HOST_PASSWORD = 'col1.,_swapin'
+EMAIL_HOST_USER = os.environ.get('USER_EMAIL')
+EMAIL_HOST_PASSWORD = os.environ.get('PASS_EMAIL')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
