@@ -20,11 +20,10 @@ router.register(r'user/clothes', UsersClothesAPIView, 'clothes')
 urlpatterns = router.urls
 
 urlpatterns += [
-    path('clothes/like/',create_like),
-    path('clothes/notification_user/<int:id>/',list_notifications_by_user),
-    path('clothes/notification_clothe/<int:id>/',list_notifications_by_clothe),
-    path('clothes/notification_read/',notification_read),
-    path('clothes/get_categories/',get_categories),
-    path('clothes/search_clothes/<int:id_category>/<int:id_user>/',search_clothes_by_category)
-
+    path('clothes/like/', create_like),
+    path('clothes/notification_user/<int:id>/', list_notifications_by_user),
+    path('clothes/notification_clothe/<int:id>/', list_notifications_by_clothe),
+    path('clothes/notification_read/', notification_read),
+    path('clothes/get_categories/', get_categories),
+    path('clothes/search_clothes/<int:id_category>/<int:id_user>/', search_clothes_by_category)
 ]

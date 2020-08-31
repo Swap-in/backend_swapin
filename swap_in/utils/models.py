@@ -1,8 +1,8 @@
 from django.db import models
 
 TYPE_STATUS = [
-        ("ACTIVE","ACTIVE"),
-        ("INACTIVE","INACTIVE")
+        ("ACTIVE", "ACTIVE"),
+        ("INACTIVE", "INACTIVE")
         ]
 
 class SwapinModel(models.Model):
@@ -18,7 +18,10 @@ class SwapinModel(models.Model):
         help_text='Date time on wich object was last modified.'
     )
 
-    status = models.CharField(max_length=8,choices=TYPE_STATUS)
+    status = models.CharField(
+        max_length=8,
+        choices=TYPE_STATUS
+    )
 
     class Meta:
         """Meta option."""

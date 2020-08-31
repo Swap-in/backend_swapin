@@ -25,9 +25,9 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = os.environ.get('SECRET_KEY_HASH')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
 
 # Application definition
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-SERVER_EMAIL = "your-server@example.com"  
+SERVER_EMAIL = "your-server@example.com"
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -161,7 +161,7 @@ REST_FRAMEWORK = {
 }
 
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.environ.get('USER_EMAIL')
 EMAIL_HOST_PASSWORD = os.environ.get('PASS_EMAIL')

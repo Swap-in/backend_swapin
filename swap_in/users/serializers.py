@@ -3,8 +3,7 @@
 # Django
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
-from django.core.mail import EmailMultiAlternatives, EmailMessage
-from django.template import Context
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.conf import settings
@@ -18,7 +17,6 @@ from rest_framework.authtoken.models import Token
 from swap_in.users.models import User, Country
 from swap_in.clothes.models import (
     Clothes,
-    category
 )
 
 # Utilites
@@ -104,7 +102,7 @@ class CreateUserSerializer(serializers.Serializer):
         mail.attach_alternative(html_body, "text/html")
         mail.send()
 
-    def generate_token(self,user):
+    def generate_token(self, user):
         """ Generate verification token"""
         exp_date = timezone.now() + timedelta(days=1)
         payload = {
@@ -141,7 +139,7 @@ class VerificationAccountSerializer(serializers.Serializer):
 
     token = serializers.CharField()
 
-    def validate_token(self,data):
+    def validate_token(self, data):
         """ Verify if token is valid or not """
         try:
             payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])

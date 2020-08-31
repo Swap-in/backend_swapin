@@ -1,6 +1,6 @@
 """ Clothes Serializers """
 
-# Django REST Framework 
+# Django REST Framework
 from rest_framework import serializers
 
 # Models
@@ -30,9 +30,10 @@ class CategoryModelserializer(serializers.ModelSerializer):
         model = category
         fields = (
             'id',
-            'description',            
+            'description',
         )
 
 class CategorySerializer(serializers.Serializer):
+    """Category serializer"""
     id = serializers.IntegerField()
     description = serializers.CharField()
