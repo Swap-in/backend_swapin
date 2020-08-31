@@ -39,11 +39,11 @@ CD automatic with Heroku: https://swapin.herokuapp.com/
 
 | ENDPOINT | DESCRIPTION |
 | ------------- | ------------- |
-| home/ | Cooming soon  |
-| users/signup/  | Cooming soon  |
-| users/login/ | Cooming soon  |
-| users/verify/ | Cooming soon  |
-| users/list_clothes/<int:id>/  | Cooming soon  |
+| home/ | endpoint for random clothes to show on feed app  |
+| users/signup/  | send information to signup a new user  |
+| users/login/ | use the credentials for the user to login on the app  |
+| users/verify/ | an endpoint where redirect to login when the user clic on it in his email  |
+| users/list_clothes/<int:id>/  | endpoint to see all the clothes by an specific user  |
 | clothes/like/  | that is responsible for creating the like, the notification and return whether or not it was a match |
 | clothes/notification_user/<int:id>/  | that is responsible for obtaining notifications by user, when it is a match it returns true or false, if it is true it returns the phone number to be able to teach the match  |
 | clothes/notification_clothe/<int:id>/  | that is responsible for bringing the list of notifications for clothing  |
