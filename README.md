@@ -1,4 +1,4 @@
-# API DJango - Recoverid - Documentación
+# API DJango - Swap.In - Documentación
 
 > Description and use of the API - Swap.in - Final Project Platzi Master
 
@@ -32,7 +32,7 @@ python3 manage.py runserver
 
 ## Despliegue 📦
 
-CD automatico con Heroku: https://recoverid-api.herokuapp.com/
+CD automatico con Heroku: hhttps://swapin.herokuapp.com/
 
 La ejecucion de servicios se puede hacer importando los endpoints a insomnia, los cuales estan en la carpeta `endpoints`.
 
