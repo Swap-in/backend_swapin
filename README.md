@@ -1,9 +1,9 @@
-# API DJango - Swap.in - Documentación
+# API Django - Swap.in - Documentation
 
 This provides an specification file for the Swapin Api
 
 
-> Description and use of the API - Swap.in - Final Project Platzi Master
+> Description and use of the API - Swap.in - Final project Platzi Master program
 
 [![django version](https://img.shields.io/badge/django%20versions-1.11%20%7C%202.0%20%7C%202.1-blue)](https://www.djangoproject.com/) [![github release version](https://img.shields.io/github/v/release/c3-zally/api-python.svg?include_prereleases)](https://github.com/c3-zally/api-python/releases/latest)  [![license](https://img.shields.io/github/license/c3-zally/api-python.svg)](https://github.com/c3-zally/api-python/blob/master/LICENSE)  [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/c3-zally/api-python/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 
@@ -21,9 +21,16 @@ pip3
 
 ## Installation 🔧
 Install the requirements and execute the env and install the requirements.
+for macOS:
 ```
 python3 -m venv venv
 source venv/bin/activate
+pip3 install -r requirements.txt
+```
+for windows
+```
+python3 -m venv venv
+venv\Scripts\activate.bat
 pip3 install -r requirements.txt
 ```
 
@@ -54,7 +61,7 @@ CD automatic with Heroku: https://swapin.herokuapp.com/
 
 ## License 📄
 
-Este proyecto está bajo la Licencia (MIT) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+This project it's under the license (MIT) - look at file [LICENSE.md](LICENSE.md) for details
 
 
 
